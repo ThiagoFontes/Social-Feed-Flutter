@@ -11,15 +11,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Social Feed',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Social Feed'),
@@ -74,20 +65,43 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        child: FutureBuilder<User>(
-          future: user,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Text(snapshot.data.name);
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
+      body: Container(
+        child: FutureBuilder(
+          future: getListOfUsers(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            //If no data is returned
+            if (snapshot.data == null) {
+              return Container(
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else { //We've got the users list
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text(snapshot.data[index].name),
+                  );
+                },
+              );
             }
 
-            // By default, show a loading spinner.
-            return CircularProgressIndicator();
           },
         ),
+//        child: FutureBuilder<User>(
+//          future: user,
+//          builder: (context, snapshot) {
+//            if (snapshot.hasData) {
+//              return Text(snapshot.data.name);
+//            } else if (snapshot.hasError) {
+//              return Text("${snapshot.error}");
+//            }
+//
+//            // By default, show a loading spinner.
+//            return CircularProgressIndicator();
+//          },
+//        ),
       ),
     );
   }

@@ -1,12 +1,19 @@
 // To parse this JSON data, do
 //
 //     final user = userFromJson(jsonString);
+//
+// https://app.quicktype.io/
 
 import 'dart:convert';
 
+//Single user functions
 User userFromJson(String str) => User.fromJson(json.decode(str));
-
 String userToJson(User data) => json.encode(data.toJson());
+
+//List of users functions
+List<User> usersFromJson(String str) => new List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
+String usersToJson(List<User> data) => json.encode(new List<dynamic>.from(data.map((x) => x.toJson())));
+
 
 class User {
   int id;
