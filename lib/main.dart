@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_feed/user_model.dart';
 import 'api_handler.dart';
+import 'detais_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -58,6 +59,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     title: Text(snapshot.data[index].username),
                     subtitle: Text(snapshot.data[index].email),
+                    onTap: (){
+                      Navigator.push(context,
+                          new MaterialPageRoute(builder: (context) => DetailPage(snapshot.data[index]))
+                      );
+                    },
                   );
                 },
               );
