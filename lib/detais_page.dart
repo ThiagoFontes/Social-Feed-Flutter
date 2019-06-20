@@ -62,6 +62,11 @@ class _UserDetails extends StatelessWidget{
               subtitle: Text(_user.phone),
               leading: Icon(Icons.phone),
             ),
+            ListTile(
+              title: Text("Website"),
+              subtitle: Text(_user.website),
+              leading: Icon(Icons.link),
+            ),
           ],
         ),
       ),

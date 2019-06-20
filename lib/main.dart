@@ -51,20 +51,22 @@ class _MyHomePageState extends State<MyHomePage> {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    leading:  Icon(
-                      Icons.supervised_user_circle,
-                      size: 50.0,
-                      color: Colors.blue,
-                    ),
-                    title: Text(snapshot.data[index].username),
-                    subtitle: Text(snapshot.data[index].email),
-                    onTap: (){
-                      Navigator.push(context,
-                          //Index + 1 is equal to userId in the API
-                          new MaterialPageRoute(builder: (context) => DetailPage(snapshot.data[index], index+1))
-                      );
-                    },
+                  return Card(
+                    child: ListTile(
+                      leading:  Icon(
+                        Icons.supervised_user_circle,
+                        size: 50.0,
+                        color: Colors.blue,
+                      ),
+                      title: Text(snapshot.data[index].username),
+                      subtitle: Text(snapshot.data[index].email),
+                      onTap: (){
+                        Navigator.push(context,
+                            //Index + 1 is equal to userId in the API
+                            new MaterialPageRoute(builder: (context) => DetailPage(snapshot.data[index], index+1))
+                        );
+                      },
+                    )
                   );
                 },
               );
