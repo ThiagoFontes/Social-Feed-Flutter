@@ -61,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     subtitle: Text(snapshot.data[index].email),
                     onTap: (){
                       Navigator.push(context,
-                          new MaterialPageRoute(builder: (context) => DetailPage(snapshot.data[index]))
+                          //Index + 1 is equal to userId in the API
+                          new MaterialPageRoute(builder: (context) => DetailPage(snapshot.data[index], index+1))
                       );
                     },
                   );

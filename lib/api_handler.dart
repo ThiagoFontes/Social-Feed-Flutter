@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:social_feed/post_model.dart';
 import 'package:social_feed/user_model.dart';
 
 Future<User> getUser() async{
@@ -8,7 +9,7 @@ Future<User> getUser() async{
     return userFromJson(response.body);
   } else {
     //Something went wrong ops
-    throw Exception('Failed to load post');
+    throw Exception('Failed to load user');
   }
 }
 
@@ -19,6 +20,17 @@ Future<List<User>> getListOfUsers() async {
     return usersFromJson(response.body);
   } else {
     //Something went wrong ops
-    throw Exception('Failed to load post');
+    throw Exception('Failed to load users');
+  }
+}
+
+Future<List<Post>> getListOfPosts(int userId) async {
+  final response = await http.get('https://jsonplaceholder.typicode.com/posts?userId=${userId}');
+  if (response.statusCode == 200) {
+    //Returning User object
+    return postsFromJson(response.body);
+  } else {
+    //Something went wrong ops
+    throw Exception('Failed to load posts');
   }
 }

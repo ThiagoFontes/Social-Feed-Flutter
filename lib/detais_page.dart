@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_feed/user_model.dart';
 
+import 'api_handler.dart';
+
 class DetailPage extends StatelessWidget {
   final User _user;
+  final int _userId;
 
-  DetailPage(this._user);
+  DetailPage(this._user, this._userId);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,7 @@ class DetailPage extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              Text("Posts will be here..."),
+              new _UserPosts(_userId),
               new _UserDetails(_user),
             ],
           ),
@@ -64,5 +67,50 @@ class _UserDetails extends StatelessWidget{
       ),
     );
   }
+}
 
+class _UserPosts extends StatelessWidget {
+  final int _userId;
+
+  _UserPosts(this._userId);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        child: FutureBuilder(
+          future: getListOfPosts(_userId),
+          builder: (BuildContext context, AsyncSnapshot snapshot){
+            //If no data is returned
+            if (snapshot.data == null) {
+              return Container(
+                child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+            } else { //We've got the posts list
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text(
+                        snapshot.data[index].title,
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                      ),
+                      subtitle: Text(
+                        snapshot.data[index].body,
+                        softWrap: true,
+                      ),
+                    )
+                  );
+                },
+              );
+            }
+          },
+        ),
+      )
+    );
+  }
 }
